@@ -1,6 +1,3 @@
-# stat-tests
-Easy-to-use statistical tests in Python
-
 ### Install locally
 ```sh
 python setup.py sdist
@@ -10,7 +7,7 @@ python setup.py sdist
 pip install stat-tests
 ```
 
-## To use
+### To use
 ```py
 >>> import stat_tests
 ```
