@@ -42,7 +42,7 @@ def single_proportion_test(x, n, p_hypo=0.5, one_side=False):
 
     Returns:
     z: z score
-    p: p_value
+    p: p value
     '''
     p_hat = x / n
     standard_error = np.sqrt(p_hat * (1 - p_hat) / n)
@@ -69,9 +69,23 @@ def two_sample_proportion_test(x1, n1, x2, n2):
 
     Returns:
     z: z score
-    p: p_value
+    p: p value
     '''
     z, p_value = statsmodels.stats.proportion.proportions_ztest((x1, x2),
                                                                 (n1, n2))
     return z, p_value
+
+
+def single_sample_mean_test(sample):
+    '''Single sample test of mean
+
+    '''
+    pass
+
+
+def paired_sample_mean_test(sample):
+    '''Paired sample test of mean
+
+    '''
+    pass
 
