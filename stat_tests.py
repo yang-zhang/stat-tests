@@ -6,7 +6,7 @@ import statsmodels.stats.proportion
 
 
 def single_proportion_confidence_interval(x, n, confidence_interval_size=0.95):
-    '''Single proportion confidence interval.
+    '''Single proportion confidence interval
 
     For example, if x out of n customers clicked the link , what is the \
     confidence interval of click through rate.
@@ -29,7 +29,7 @@ def single_proportion_confidence_interval(x, n, confidence_interval_size=0.95):
 
 
 def single_proportion_test(x, n, p_hypo=0.5, one_side=False):
-    '''Single proportion ztest.
+    '''Single proportion significant test
 
     For example, if x out of n customers are men, and the hypothesis is that\
     50% of the customers are men, does data support this hypothesis?
@@ -52,4 +52,26 @@ def single_proportion_test(x, n, p_hypo=0.5, one_side=False):
         p_value *= 2
     return z, p_value
 
+
+def two_sample_proportion_test(x1, n1, x2, n2):
+    '''Tow sample proportion significant test
+
+    For example, if x1 out of n1 customers click through on Website Version A,\
+    x2 out of n2 customers click through on Website Version B, and the\
+    hypothesis is that the click through rates are the same, does data support\
+    this hypothesis?
+
+    Parameters:
+    x1: number of samples in Sample-1
+    n1: number of total samples in Sample-1
+    x2: number of samples in Sample-2
+    n2: number of total samples in Sample-2
+
+    Returns:
+    z: z score
+    p: p_value
+    '''
+    z, p_value = statsmodels.stats.proportion.proportions_ztest((x1, x2),
+                                                                (n1, n2))
+    return z, p_value
 
