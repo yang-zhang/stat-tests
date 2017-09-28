@@ -5,12 +5,10 @@ Easy-to-use statistical tests in Python
 ```sh
 python setup.py sdist
 ```
-<!--- 
-### Install using pip
+### Install using pip (coming soon)
 ```sh
 pip install stat-tests
 ```
---> 
 
 ## To use
 
