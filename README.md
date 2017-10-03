@@ -1,6 +1,6 @@
 ### Install locally
 ```sh
-python setup.py sdist
+python setup.py install
 ```
 ### Install using pip
 ```sh
@@ -44,8 +44,44 @@ For example, if `n_successes_1` out of `n_trials_1` customers click through on W
 ### One-sample mean confidence interval
 For example, if `data` is the heights of a group of men, what is the confidence interval of size `confidence` for the mean of the heights?
 ```py
->>> import numpy as np
 >>> data = 1.80 + 0.2 * np.random.randn(1000)
 >>> st.one_sample_mean_confidence_interval(data, confidence=0.95)
 (1.7980145129603369, 1.8228186217572906)
 ```
+
+### One-sample test of mean
+For example, if `data` is the heights of a group of men, and the hypothesis is that the mean of the heights is `m_hypo`, does data support this hypothesis?
+```py
+>>> data = 1.80 + 0.2 * np.random.randn(1000)
+>>> t_score, p_value = st.one_sample_mean_test(data, p_hypo=1.78)
+>>> t_score, p_value
+(4.8430777499530517, 1.4808428763412875e-06)
+```
+
+### Two-sample test of mean
+For example, if `data1` is the heights of a group of men, `data2` is the heights of a group of women, and the hypothesis is that the means of men and women are the same, does data support this hypothesis?
+
+```py
+>>> data1 = 1.80 + 0.2 * np.random.randn(1000)
+>>> data2 = 1.70 + 0.2 * np.random.randn(1000)
+>>> t_score, p_value = st.two_sample_mean_test(data1, data2)
+>>> t_score, p_value
+(11.720297373853812, 9.9185358995527835e-31)
+```
+
+### Paired-sample test of mean
+For example, if `data1` is the heights of a group of men in the morning, `data2` is the heights of the same group of men in the evening (with the same order), and the hypothesis is that the heights of morning and evening are the same, does data support this hypothesis?
+```py
+>>> data1 = 1.80 + 0.2 * np.random.randn(1000)
+>>> data2 = data1 + 0.01 + 0.01 * np.random.randn(len(data1))
+>>> t_score, p_value = st.paired_sample_mean_test(data1, data2)
+>>> t_score, p_value
+(-34.149842899654423, 5.452067026533736e-170)
+>>> data2 = data1 + 0.01 * np.random.randn(len(data1))
+>>> t_score, p_value = st.paired_sample_mean_test(data1, data2)
+>>> t_score, p_value
+(-0.43398665574510392, 0.66439183811383029)
+```
+
+
+

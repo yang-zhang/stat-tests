@@ -88,7 +88,6 @@ def one_sample_mean_confidence_interval(data,
 
     Returns:
     confidence_interval
-
     '''
     a = np.array(data)
     n = len(a)
@@ -97,8 +96,8 @@ def one_sample_mean_confidence_interval(data,
     standard_error_of_mean = np.sqrt(sample_standard_devication / n)
     alpha = 1 - confidence
     z_critical = scipy.stats.norm.ppf(1 - alpha / 2)
-    confidence_interval = mean_ - z_critical * standard_error_of_mean, mean_ +\
-        z_critical * standard_error_of_mean
+    confidence_interval = mean_ - z_critical * standard_error_of_mean,\
+        mean_ + z_critical * standard_error_of_mean
     return confidence_interval
 
 
@@ -111,9 +110,48 @@ def _one_sample_mean_confidence_interval_t(data, confidence=0.95):
     return m-h, m+h
 
 
-def paired_sample_mean_test(sample):
-    '''Paired sample test of mean
+def one_sample_mean_test(data, m_hypo):
+    '''One-sample test of mean
+    For example, if `data` is the heights of a group of men, and the hypothesis is that the mean of the heights is `m_hypo`, does data support this hypothesis?
+
+    Parameters:
+    data
+    m_hypo: hypothetical mean
+
+    Returns:
+    t_score, p_value
+    '''
+    a = np.array(data)
+    t, p_value = scipy.stats.ttest_1samp(a, popmean=m_hypo)
+    return t, p_value
+
+
+def two_sample_mean_test(data1, data2):
+    '''Two-sample test of mean
+    For example, if `data1` is the heights of a group of men, `data2` is the heights of a group of women, and the hypothesis is that the means of men and women are the same, does data support this hypothesis?
+
+    Parameters:
+    data1, data1
+
+    Returns:
+    t_score, p_value
+    '''
+    a, b = np.array(data1), np.array(data2)
+    t, p_value = scipy.stats.ttest_ind(data1, data2)
+    return t, p_value
+
+
+def paired_sample_mean_test(data1, data2):
+    '''Paired-sample test of mean
+    For example, if `data1` is the heights of a group of men in the morning, `data2` is the heights of the same group of men in the evening (with the same order), and the hypothesis is that the heights of morning and evening are the same, does data support this hypothesis?
+
+    Parameters:
+    data1, data1
+
+    Returns:
+    t_score, p_value
 
     '''
-    pass
-
+    a, b = np.array(data1), np.array(data2)
+    t, p_value = scipy.stats.ttest_rel(data1, data2)
+    return t, p_value
