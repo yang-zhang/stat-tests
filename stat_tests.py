@@ -137,7 +137,7 @@ def two_sample_mean_test(data1, data2):
     t_score, p_value
     '''
     a, b = np.array(data1), np.array(data2)
-    t, p_value = scipy.stats.ttest_ind(data1, data2)
+    t, p_value = scipy.stats.ttest_ind(a, b)
     return t, p_value
 
 
@@ -153,5 +153,31 @@ def paired_sample_mean_test(data1, data2):
 
     '''
     a, b = np.array(data1), np.array(data2)
-    t, p_value = scipy.stats.ttest_rel(data1, data2)
+    t, p_value = scipy.stats.ttest_rel(a, b)
     return t, p_value
+
+
+def correlation_coef(data1, data2):
+    '''Correlation coefficient and non-correlation test
+    For example, if `data1` is the English test score of a group of students, `data2` is the Math test score of the same group of students, are the two scores correlated?
+
+    Parameters:
+    data1, data1
+
+    Returns: Pearson correlation coefficient, p-value of non-correlation test
+    '''
+    x, y = np.array(data1), np.array(data2)
+    r, p_value = scipy.stats.pearsonr(x, y)
+    return r, p_value
+
+
+
+
+
+
+
+
+
+
+
+

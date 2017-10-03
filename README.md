@@ -77,11 +77,29 @@ For example, if `data1` is the heights of a group of men in the morning, `data2`
 >>> t_score, p_value = st.paired_sample_mean_test(data1, data2)
 >>> t_score, p_value
 (-34.149842899654423, 5.452067026533736e-170)
+
 >>> data2 = data1 + 0.01 * np.random.randn(len(data1))
 >>> t_score, p_value = st.paired_sample_mean_test(data1, data2)
 >>> t_score, p_value
 (-0.43398665574510392, 0.66439183811383029)
 ```
+
+### Correlation coefficient and non-correlation test
+For example, if `data1` is the English test score of a group of students, `data2` is the Math test score of the same group of students, are the two scores correlated?
+```py
+>>> data1 = 3 + 0.2 * np.random.randn(1000)
+>>> data2 = 3 + 0.2 * np.random.randn(1000)
+>>> r, p_value = st.correlation_coef(data1, data2)
+>>> r, p_value
+(0.0031232102929028708, 0.92142308109769133)
+
+>>> data2 = data1 + 0.5 * np.random.randn(len(data1))
+>>> r, p_value = st.correlation_coef(data1, data2)
+>>> r, p_value
+(0.37799832675973383, 2.566197851682784e-35)
+```
+
+
 
 
 
