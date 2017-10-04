@@ -1,8 +1,10 @@
 from __future__ import print_function
 
 import numpy as np
+import pandas as pd
 import scipy.stats
 import statsmodels.stats.proportion
+import sklearn.metrics
 
 
 def one_sample_proportion_confidence_interval(n_successes, n_trials,
@@ -131,7 +133,7 @@ def two_sample_mean_test(data1, data2):
     For example, if `data1` is the heights of a group of men, `data2` is the heights of a group of women, and the hypothesis is that the means of men and women are the same, does data support this hypothesis?
 
     Parameters:
-    data1, data1
+    data1, data2
 
     Returns:
     t_score, p_value
@@ -141,12 +143,26 @@ def two_sample_mean_test(data1, data2):
     return t, p_value
 
 
+def multi_sample_mean_test(data_sets):
+    '''Multi-sample test of mean
+    For example, if `data1` is the heights of football team A, `data2` is the heights of football team B, `data3` is the heights of football team C, and the hypothesis is that the means of the teams are the same, does data support this hypothesis?
+
+    Parameters:
+    data_sets
+
+    Returns:
+    f_score, p_value
+    '''
+    f, p_value = scipy.stats.f_oneway(*data_sets)
+    return f, p_value
+
+
 def paired_sample_mean_test(data1, data2):
     '''Paired-sample test of mean
     For example, if `data1` is the heights of a group of men in the morning, `data2` is the heights of the same group of men in the evening (with the same order), and the hypothesis is that the heights of morning and evening are the same, does data support this hypothesis?
 
     Parameters:
-    data1, data1
+    data1, data2
 
     Returns:
     t_score, p_value
@@ -158,26 +174,80 @@ def paired_sample_mean_test(data1, data2):
 
 
 def correlation_coef(data1, data2):
-    '''Correlation coefficient and non-correlation test
-    For example, if `data1` is the English test score of a group of students, `data2` is the Math test score of the same group of students, are the two scores correlated?
+    '''Correlation coefficient and non-correlation test for two continuous variables
+    For example, if `data1` is the English test score of a group of students, `data2` is the Math test score of the same group of students, are the two scores correlated? Null hypothesis is non-correlation.
 
     Parameters:
-    data1, data1
+    data1, data2
 
-    Returns: Pearson correlation coefficient, p-value of non-correlation test
+    Returns:
+    Pearson correlation coefficient, p-value of non-correlation test
     '''
     x, y = np.array(data1), np.array(data2)
     r, p_value = scipy.stats.pearsonr(x, y)
     return r, p_value
 
 
+def make_contingency(data1, data2):
+    '''Make contingency table of two categorical data sets
+    '''
+    df = pd.DataFrame({
+        '_': 0,
+        'data1': data1,
+        'data2': data2,
+    })
+    contingency_table = df.pivot_table(
+        values='_',
+        columns='data1',
+        index='data2',
+        aggfunc='count')
+
+    return contingency_table
 
 
+def chisq(data1, data2):
+    '''Chi-squred test for two categorical variables
+    For example, if `data1` is the blood type of a group of people, `data2` is the gender of the same group of people, are blood type and gender correlated?  Null hypothesis is non-correlation.
+
+    Parameters:
+    data1, data2
+
+    Returns:
+    chi2_score, p-value of non-correlation test
+
+    '''
+    contingency_table = make_contingency(data1, data2)
+    chi2, p_value, _, _ = scipy.stats.chi2_contingency(contingency_table)
+    return chi2, p_value
 
 
+def joint_entropy(x, y):
+    '''Joint entropy of two categorical variables.
+    '''
+    df = pd.DataFrame(np.stack((x, y), axis=1))
+    df.columns = ['a', 'b']
+    df_value_counts_joined = df.groupby(['a', 'b']).size().reset_index().\
+        rename(columns={0:  'count'})
+    value_counts_joined = df_value_counts_joined['count']
+    return scipy.stats.entropy(value_counts_joined)
 
 
+def mutual_information(data1, data2):
+    '''Mutual information of two categorical variables
+    For example, if `data1` is the blood type of a group of people, `data2` is the gender of the same group of people, are blood type and gender mutually dependent?
+
+    Parameters:
+    data1, data2
+
+    Returns:
+    mutual_information
+    '''
+
+    H1 = scipy.stats.entropy(np.bincount(data1))
+    H2 = scipy.stats.entropy(np.bincount(data2))
+    mutual_information = H1 + H2 - joint_entropy(data1, data2)
+    return mutual_information
 
 
-
-
+def _mutual_information_sklearn(data1, data2):
+    return sklearn.metrics.mutual_info_score(data1, data2)
