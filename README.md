@@ -1,13 +1,30 @@
-### Install locally
+A simple Python library that does some basic, frequently used statistical tests.
+
+It currently does the tests below. Use case and code examples will follow.
+- One-sample proportion confidence interval
+- One-sample proportion significant test
+- Two-sample proportion significant test
+- One-sample mean confidence interval
+- One-sample test of mean
+- Two-sample test of mean
+- Multi-sample test of mean
+- Paired-sample test of mean
+- Correlation coefficient and non-correlation test for two continuous variables
+- Chi-squred test for two categorical variables
+- Mutual information of two categorical variables
+
+## To install
+
+### To install locally, under the root of the repo:
 ```sh
 python setup.py install
 ```
-### Install using pip
+### To install using pip:
 ```sh
 pip install stat-tests
 ```
 
-### To import
+## To use
 ```py
 >>> import stat_tests as st
 ```
