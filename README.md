@@ -82,7 +82,7 @@ For example, if `data` is the heights of a group of men, and the hypothesis is t
 ```
 
 ### Two-sample test of mean
-For example, if `data1` is the heights of a group of men, `data2` is the heights of a group of women, and the hypothesis is that the means of men and women are the same, does data support this hypothesis?
+For example, if `data1` is the heights of a group of men, `data2` is the heights of a group of women, and the hypothesis is that the means of men and women are the same, does data support this hypothesis? (t-test)
 
 ```py
 >>> data1 = 1.80 + 0.2 * np.random.randn(1000)
@@ -93,7 +93,7 @@ For example, if `data1` is the heights of a group of men, `data2` is the heights
 ```
 
 ### Multi-sample test of mean
-For example, if `data1` is the heights of football team A, `data2` is the heights of football team B, `data3` is the heights of football team C, and the hypothesis is that the means of the teams are the same, does data support this hypothesis?
+For example, if `data1` is the heights of football team A, `data2` is the heights of football team B, `data3` is the heights of football team C, and the hypothesis is that the means of the teams are the same, does data support this hypothesis? (anova)
 
 ```py
 # insignificant case
